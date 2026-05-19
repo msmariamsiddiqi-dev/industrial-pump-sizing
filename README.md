@@ -1,1 +1,1 @@
-# industrial-pump-sizing
+# pump-sizing
