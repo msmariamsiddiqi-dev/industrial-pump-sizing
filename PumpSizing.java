@@ -136,4 +136,36 @@ public class PumpSizing {
             System.out.println("      Recommended: 0.6-3.0 m/s to prevent solids settling");
             System.out.println("      Consider: Smaller pipe diameter or higher flow");
         } else if (velocity <= 3.0) {
-            System.out.printf("  ✅ VELOCITY OK: %.3f m/s (within 0.6-3.0 m/s)%n
+            System.out.printf("  ✅ VELOCITY OK: %.3f m/s (within 0.6-3.0 m/s)%n", velocity);
+        } else {
+            System.out.printf("  ⚠️  VELOCITY HIGH: %.3f m/s (erosion risk)%n", velocity);
+        }
+        
+        // NPSH check
+        double typicalNPSHR = 2.0;
+        double margin = NPSHA - typicalNPSHR;
+        if (margin > 0.5) {
+            System.out.printf("  ✅ NPSH OK: Available=%.2f m (margin: +%.2f m)%n", NPSHA, margin);
+        } else {
+            System.out.printf("  ⚠️  NPSH MARGIN LOW: Available=%.2f m%n", NPSHA);
+        }
+        
+        System.out.println("\n⚡ POWER ESTIMATE:");
+        System.out.printf("  • Hydraulic power: %.1f W%n", PHydraulicW);
+        System.out.printf("  • Electric power: %.3f kW (@70%% efficiency)%n", PElectricW / 1000);
+        
+        System.out.println("\n======================================================================");
+        System.out.println("📚 REFERENCES:");
+        System.out.println("  EPA Onsite Wastewater Treatment Systems Manual (2002)");
+        System.out.println("  Table 3-4: Department Store flow rates (Page 3-7)");
+        System.out.println("  https://www.epa.gov/sites/default/files/2015-06/documents/");
+        System.out.println("  2004_07_07_septics_septic_2002_osdm_all.pdf");
+        System.out.println("======================================================================");
+        
+        System.out.println("\n💡 ENGINEERING NOTES:");
+        System.out.println("  • This design uses EPA TYPICAL values (not peak flows)");
+        System.out.printf("  • Low velocity (%.3f m/s) is expected for small facilities%n", velocity);
+        System.out.println("  • For real projects: consult local codes and add safety factors");
+        System.out.println("  • Consider intermittent operation for low-flow systems");
+    }
+}
